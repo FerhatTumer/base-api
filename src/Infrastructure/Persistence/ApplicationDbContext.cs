@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using TaskManagement.Domain.Aggregates.ProjectAggregate;
 using TaskManagement.Domain.Aggregates.TeamAggregate;
+using TaskManagement.Domain.Common;
 
 namespace TaskManagement.Infrastructure.Persistence;
 
@@ -25,6 +26,7 @@ public sealed class ApplicationDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Ignore<DomainEvent>();
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         base.OnModelCreating(modelBuilder);
     }
