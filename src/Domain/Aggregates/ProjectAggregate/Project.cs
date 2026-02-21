@@ -65,6 +65,15 @@ public class Project : AggregateRoot<int>
         return taskItem;
     }
 
+    public void UpdateDetails(string name, string? description)
+    {
+        EnsureNotDeleted();
+
+        SetName(name);
+        SetDescription(description);
+        SetUpdated();
+    }
+
     public void AssignTask(int taskId, int assigneeId)
     {
         EnsureNotDeleted();
@@ -88,6 +97,15 @@ public class Project : AggregateRoot<int>
         {
             AddDomainEvent(new TaskCompletedEvent(taskItem.Id, DateTimeOffset.UtcNow));
         }
+    }
+
+    public void UpdateTaskDetails(int taskId, string title, string? description, Priority priority, DateTimeOffset? dueDate, decimal? estimatedHours)
+    {
+        EnsureNotDeleted();
+
+        TaskItem taskItem = GetTaskOrThrow(taskId);
+        taskItem.UpdateDetails(title, description, priority, dueDate, estimatedHours);
+        SetUpdated();
     }
 
     public void Archive()

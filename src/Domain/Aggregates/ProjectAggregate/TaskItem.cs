@@ -99,6 +99,18 @@ public class TaskItem : Entity<int>
         SetUpdated();
     }
 
+    internal void UpdateDetails(string title, string? description, Priority priority, DateTimeOffset? dueDate, decimal? estimatedHours)
+    {
+        EnsureNotDeleted();
+
+        SetTitle(title);
+        SetDescription(description);
+        SetPriority(priority);
+        SetDueDate(dueDate);
+        SetEstimatedHours(estimatedHours);
+        SetUpdated();
+    }
+
     private static bool IsValidStatusTransition(DomainTaskStatus currentStatus, DomainTaskStatus newStatus)
     {
         return currentStatus switch
